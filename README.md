@@ -9,5 +9,3 @@
 | 음식 부분 수정 | PATCH | /foods |
 | 음식 삭제 | DELETE | /foods |
 ---
-
-
