@@ -1,5 +1,6 @@
 package com.delivery.toy.domain.food.repository;
 
+import static org.assertj.core.api.Assertions.*;
 import com.delivery.toy.domain.food.model.Food;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,10 +15,10 @@ public class FoodRepositoryTest {
     @Autowired
     private FoodRepository foodRepository;
 
-    @DisplayName("food 저장 테스트")
-    @Test
-    void saveFood(){
+    private Food food;
 
+    @BeforeEach
+    void createFood(){
         String name = "salad";
         double caloriePerGram = 1.2;
         double carbohydratePerGram = 0.03;
@@ -38,6 +39,11 @@ public class FoodRepositoryTest {
                 .imgPath(imgPath)
                 .build();
 
+        this.food = food;
+    }
+    @DisplayName("food 저장 테스트")
+    @Test
+    void saveFood(){
 
         if(food == null){
             throw new InvalidDataAccessApiUsageException("Food 객체 생성 실패로 save 불가");
@@ -45,41 +51,21 @@ public class FoodRepositoryTest {
 
         Food savedFood = foodRepository.save(food);
 
-        Assertions.assertThat(savedFood).isSameAs(food);
-        Assertions.assertThat(savedFood.getName()).isEqualTo(name);
-        Assertions.assertThat(savedFood.getCaloriePerGram()).isEqualTo(caloriePerGram);
-        Assertions.assertThat(savedFood.getCarbohydratePerGram()).isEqualTo(carbohydratePerGram);
-        Assertions.assertThat(savedFood.getProteinPerGram()).isEqualTo(proteinPerGram);
-        Assertions.assertThat(savedFood.getProvincePerGram()).isEqualTo(provincePerGram);
-        Assertions.assertThat(savedFood.getGrams()).isEqualTo(grams);
-        Assertions.assertThat(savedFood.getPrice()).isEqualTo(price);
-        Assertions.assertThat(savedFood.getImgPath()).isEqualTo(imgPath);
-
+        assertThat(savedFood).isSameAs(food);
+        assertThat(savedFood)
+                .hasFieldOrPropertyWithValue("name","salad")
+                .hasFieldOrPropertyWithValue("caloriePerGram",1.2)
+                .hasFieldOrPropertyWithValue("carbohydratePerGram",0.03)
+                .hasFieldOrPropertyWithValue("proteinPerGram",0.05)
+                .hasFieldOrPropertyWithValue("provincePerGram",0.01)
+                .hasFieldOrPropertyWithValue("grams",250)
+                .hasFieldOrPropertyWithValue("price",12000)
+                .hasFieldOrPropertyWithValue("imgPath","temp");
     }
 
     @DisplayName("food 조회 테스트")
     @Test
     void searchFood(){
-        String name = "salad";
-        double caloriePerGram = 1.2;
-        double carbohydratePerGram = 0.03;
-        double proteinPerGram = 0.05;
-        double provincePerGram = 0.01;
-        int grams = 250;
-        int price = 12000;
-        String imgPath = "temp";
-
-        Food food = Food.builder()
-                .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
-                .price(price)
-                .imgPath(imgPath)
-                .build();
-
 
         if(food == null){
             throw new InvalidDataAccessApiUsageException("Food 객체 생성 실패로 save 불가");
