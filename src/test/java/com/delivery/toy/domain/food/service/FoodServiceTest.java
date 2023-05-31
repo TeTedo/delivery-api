@@ -46,8 +46,8 @@ public class FoodServiceTest {
     @Test
     void findById() {
         saveFood();
-        Long id = 1L;
-        Food food = foodService.findById(id);
+        FindByIdRequest findByIdRequest = new FindByIdRequest(1L);
+        Food food = foodService.findById(findByIdRequest);
         Assertions.assertThat(food).hasFieldOrPropertyWithValue("id",1L);
     }
 
@@ -59,8 +59,8 @@ public class FoodServiceTest {
             return foodRepositoryImpl.save(food);
         }
 
-        public Food findById(Long id) {
-            Food food =  foodRepositoryImpl.findById(id);
+        public Food findById(FindByIdRequest findByIdRequest) {
+            Food food =  foodRepositoryImpl.findById(findByIdRequest.id);
             return food;
         }
     }
@@ -130,5 +130,8 @@ public class FoodServiceTest {
         public FoodIllegalException(String s) {
             super(s);
         }
+    }
+
+    private record FindByIdRequest(Long id) {
     }
 }
