@@ -105,7 +105,16 @@ public class FoodServiceTest {
         private  final String imgPath;
 
 
-        public Food(String name, double caloriePerGram, double carbohydratePerGram, double proteinPerGram, double provincePerGram, int grams, int price, String imgPath) {
+        public Food(
+                String name,
+                double caloriePerGram,
+                double carbohydratePerGram,
+                double proteinPerGram,
+                double provincePerGram,
+                int grams,
+                int price,
+                String imgPath
+        ) {
             Assert.hasText(name, "상품명은 필수입니다.");
             Assert.isTrue(caloriePerGram > 0, "그램당 칼로리는 0보다 큽니다.");
             Assert.isTrue(carbohydratePerGram > 0, "그램당 탄수화물은 0보다 큽니다");
@@ -125,8 +134,15 @@ public class FoodServiceTest {
         }
     }
 
-    private record CreateRequest(String name, double caloriePerGram, double carbohydratePerGram, double proteinPerGram, double provincePerGram, int grams, int price, String imgPath) {
-
+    private record CreateRequest(
+            String name,
+            double caloriePerGram,
+            double carbohydratePerGram,
+            double proteinPerGram,
+            double provincePerGram,
+            int grams,
+            int price,
+            String imgPath) {
     }
 
     private class FoodMapper {
@@ -142,6 +158,7 @@ public class FoodServiceTest {
 
     private class FoodRepositoryImpl implements FoodRepository{
         private Food food;
+
         @Override
         public Food save(Food food) {
             this.food = food;
