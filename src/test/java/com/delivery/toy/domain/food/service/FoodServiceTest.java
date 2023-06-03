@@ -6,6 +6,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
@@ -21,10 +23,10 @@ public class FoodServiceTest {
 
     @BeforeEach
     void setUp(){
-        this.foodService= new FoodService();
-        this.foodId = 0L;
-        this.foodMapper = new FoodMapper();
-        this.foodRepositoryImpl =  new FoodRepositoryImpl();
+        foodService= new FoodService();
+        foodId = 0L;
+        foodMapper = new FoodMapper();
+        foodRepositoryImpl =  new FoodRepositoryImpl();
     }
 
 
@@ -127,6 +129,7 @@ public class FoodServiceTest {
             this.food = food;
             return food;
         }
+
         @Override
         public Food findById(Long id) {
             if(this.food.id == id) return this.food;
