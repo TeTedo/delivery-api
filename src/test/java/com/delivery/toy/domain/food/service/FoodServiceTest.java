@@ -33,7 +33,25 @@ public class FoodServiceTest {
     @DisplayName("Food dto를 받아 food Entity로 바꾼 후 저장한다.")
     @Test
     void saveFood(){
-        CreateRequest foodDto = new CreateRequest("salad",1.2,0.03,0.05,0.01,250,12000,"tempImgPath");
+        String name = "salad";
+        double caloriePerGram = 1.2;
+        double carbohydratePerGram = 0.03;
+        double proteinPerGram = 0.05;
+        double provincePerGram = 0.01;
+        int grams = 250;
+        int price = 12000;
+        String imgPath = "tempImgPath";
+
+        CreateRequest foodDto = new CreateRequest(
+                name,
+                caloriePerGram,
+                carbohydratePerGram,
+                proteinPerGram,
+                provincePerGram,
+                grams,
+                price,
+                imgPath
+        );
         Assertions.assertThat(foodDto).isNotNull();
 
         Food food = foodService.save(foodDto);
