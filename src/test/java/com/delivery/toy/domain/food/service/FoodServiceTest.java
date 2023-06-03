@@ -1,6 +1,8 @@
 package com.delivery.toy.domain.food.service;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import lombok.Builder;
 import net.minidev.json.JSONUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -104,7 +106,7 @@ public class FoodServiceTest {
         private  final int price;
         private  final String imgPath;
 
-
+        @Builder
         public Food(
                 String name,
                 double caloriePerGram,
@@ -147,7 +149,16 @@ public class FoodServiceTest {
 
     private class FoodMapper {
         public Food toFood(CreateRequest foodDto) {
-            return new Food(foodDto.name, foodDto.caloriePerGram, foodDto.carbohydratePerGram, foodDto.proteinPerGram, foodDto.provincePerGram, foodDto.grams, foodDto.price, foodDto.imgPath);
+            return Food.builder()
+                    .name(foodDto.name)
+                    .caloriePerGram(foodDto.caloriePerGram)
+                    .carbohydratePerGram(foodDto.carbohydratePerGram)
+                    .proteinPerGram(foodDto.proteinPerGram)
+                    .provincePerGram(foodDto.provincePerGram)
+                    .grams(foodDto.grams)
+                    .price(foodDto.price)
+                    .imgPath(foodDto.imgPath)
+                    .build();
         }
     }
 
