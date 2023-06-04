@@ -111,7 +111,6 @@ public class FoodServiceTest {
     }
 
     @Getter
-    @Builder
     private static class Food {
         private  final Long id;
         private  final String name;
@@ -123,6 +122,7 @@ public class FoodServiceTest {
         private  final int price;
         private  final String imgPath;
 
+        @Builder
         public Food(
                 Long id,
                 String name,
