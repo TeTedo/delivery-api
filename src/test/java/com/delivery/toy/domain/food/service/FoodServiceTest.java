@@ -76,7 +76,7 @@ public class FoodServiceTest {
 
     }
 
-    @DisplayName("id를 받아 조회한다.")
+    @DisplayName("id를 받아 조회하고 FoodResponseDto로 변환까지")
     @Test
     void findById() {
         saveFood();
@@ -89,7 +89,15 @@ public class FoodServiceTest {
         FoodResponse foodResponse =  foodMapper.toFoodResponse(food);
 
         Assertions.assertThat(foodResponse)
-                .hasFieldOrPropertyWithValue("id",1L);
+                .hasFieldOrPropertyWithValue("id",1L)
+                .hasFieldOrPropertyWithValue("name","salad")
+                .hasFieldOrPropertyWithValue("caloriePerGram",1.2)
+                .hasFieldOrPropertyWithValue("carbohydratePerGram",0.03)
+                .hasFieldOrPropertyWithValue("proteinPerGram",0.05)
+                .hasFieldOrPropertyWithValue("provincePerGram",0.01)
+                .hasFieldOrPropertyWithValue("grams",250)
+                .hasFieldOrPropertyWithValue("price",12000)
+                .hasFieldOrPropertyWithValue("imgPath","tempImgPath");
 
     }
 
