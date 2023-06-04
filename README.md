@@ -1,3 +1,19 @@
+# 하면서 고민하거나 공부했던 것들
+[DDD설계 vs SQL 중심 설계](https://diary-blockchain.tistory.com/283)
+
+[HTTP method](https://diary-blockchain.tistory.com/293)
+
+[REST API](https://diary-blockchain.tistory.com/294)
+
+[URI vs URL](https://diary-blockchain.tistory.com/296)
+
+[REST API 규칙](https://diary-blockchain.tistory.com/297)
+
+[DI 구현 방법](https://diary-blockchain.tistory.com/300)
+
+[this는 꼭 써야 하나?](https://diary-blockchain.tistory.com/303)
+
+
 
 # API URI
 | 기능 |  Method | URI|
