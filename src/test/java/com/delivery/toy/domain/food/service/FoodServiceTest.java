@@ -1,20 +1,13 @@
 package com.delivery.toy.domain.food.service;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
-import net.minidev.json.JSONUtil;
+import lombok.Getter;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 
 public class FoodServiceTest {
@@ -32,7 +25,7 @@ public class FoodServiceTest {
     }
 
 
-    @DisplayName("Food dto를 받아 food Entity로 바꾼 후 저장한다.")
+    @DisplayName("FoodRequestDto를 받아Entity로 바꾸고 저장한 후 FoodResponseDto로 변환까지")
     @Test
     void saveFood(){
         String name = "salad";
@@ -44,7 +37,7 @@ public class FoodServiceTest {
         int price = 12000;
         String imgPath = "tempImgPath";
 
-        CreateRequest foodDto = new CreateRequest(
+        CreateFoodRequest foodDto = new CreateFoodRequest(
                 name,
                 caloriePerGram,
                 carbohydratePerGram,
@@ -54,6 +47,7 @@ public class FoodServiceTest {
                 price,
                 imgPath
         );
+
         Assertions.assertThat(foodDto).isNotNull();
 
         Food food = foodService.save(foodDto);
@@ -67,15 +61,36 @@ public class FoodServiceTest {
                 .hasFieldOrPropertyWithValue("grams",250)
                 .hasFieldOrPropertyWithValue("price",12000)
                 .hasFieldOrPropertyWithValue("imgPath","tempImgPath");
+
+        FoodResponse foodResponse =  foodMapper.toFoodResponse(food);
+
+        Assertions.assertThat(foodResponse)
+                .hasFieldOrPropertyWithValue("name","salad")
+                .hasFieldOrPropertyWithValue("caloriePerGram",1.2)
+                .hasFieldOrPropertyWithValue("carbohydratePerGram",0.03)
+                .hasFieldOrPropertyWithValue("proteinPerGram",0.05)
+                .hasFieldOrPropertyWithValue("provincePerGram",0.01)
+                .hasFieldOrPropertyWithValue("grams",250)
+                .hasFieldOrPropertyWithValue("price",12000)
+                .hasFieldOrPropertyWithValue("imgPath","tempImgPath");
+
     }
 
     @DisplayName("id를 받아 조회한다.")
     @Test
     void findById() {
         saveFood();
-        FindByIdRequest findByIdRequest = new FindByIdRequest(1L);
-        Food food = foodService.findById(findByIdRequest);
-        Assertions.assertThat(food).hasFieldOrPropertyWithValue("id",1L);
+        FindByIdFoodRequest findByIdFoodRequest = new FindByIdFoodRequest(1L);
+        Food food = foodService.findById(findByIdFoodRequest);
+
+        Assertions.assertThat(food)
+                .hasFieldOrPropertyWithValue("id",1L);
+
+        FoodResponse foodResponse =  foodMapper.toFoodResponse(food);
+
+        Assertions.assertThat(foodResponse)
+                .hasFieldOrPropertyWithValue("id",1L);
+
     }
 
 
@@ -83,19 +98,21 @@ public class FoodServiceTest {
 
     private class FoodService {
 
-        public Food save(CreateRequest foodDto) {
+        public Food save(CreateFoodRequest foodDto) {
             Food food = foodMapper.toFood(foodDto);
             Assert.notNull(food, "food는 null값이 될수 없습니다.");
             return foodRepositoryImpl.save(food);
         }
 
-        public Food findById(FindByIdRequest findByIdRequest) {
-            Food food =  foodRepositoryImpl.findById(findByIdRequest.id);
+        public Food findById(FindByIdFoodRequest findByIdFoodRequest) {
+            Food food =  foodRepositoryImpl.findById(findByIdFoodRequest.id);
             return food;
         }
     }
 
-    private class Food {
+    @Getter
+    @Builder
+    private static class Food {
         private  final Long id;
         private  final String name;
         private  final double caloriePerGram;
@@ -106,8 +123,8 @@ public class FoodServiceTest {
         private  final int price;
         private  final String imgPath;
 
-        @Builder
         public Food(
+                Long id,
                 String name,
                 double caloriePerGram,
                 double carbohydratePerGram,
@@ -124,7 +141,7 @@ public class FoodServiceTest {
             Assert.isTrue(provincePerGram > 0, "그램당 지방은 0보다 큽니다");
             Assert.isTrue(price > 0, "가격은 0 보다 커야 합니다.");
             Assert.notNull(imgPath, "사진 url은 필수입니다.");
-            this.id = ++foodId;
+            this.id = ++id;
             this.name = name;
             this.caloriePerGram = caloriePerGram;
             this.carbohydratePerGram = carbohydratePerGram;
@@ -136,7 +153,21 @@ public class FoodServiceTest {
         }
     }
 
-    private record CreateRequest(
+    @Builder
+    private static record CreateFoodRequest(
+            String name,
+            double caloriePerGram,
+            double carbohydratePerGram,
+            double proteinPerGram,
+            double provincePerGram,
+            int grams,
+            int price,
+            String imgPath) {
+    }
+
+    @Builder
+    private static record FoodResponse(
+            Long id,
             String name,
             double caloriePerGram,
             double carbohydratePerGram,
@@ -148,16 +179,31 @@ public class FoodServiceTest {
     }
 
     private class FoodMapper {
-        public Food toFood(CreateRequest foodDto) {
+        public Food toFood(CreateFoodRequest createFoodRequest) {
             return Food.builder()
-                    .name(foodDto.name)
-                    .caloriePerGram(foodDto.caloriePerGram)
-                    .carbohydratePerGram(foodDto.carbohydratePerGram)
-                    .proteinPerGram(foodDto.proteinPerGram)
-                    .provincePerGram(foodDto.provincePerGram)
-                    .grams(foodDto.grams)
-                    .price(foodDto.price)
-                    .imgPath(foodDto.imgPath)
+                    .id(foodId)
+                    .name(createFoodRequest.name())
+                    .caloriePerGram(createFoodRequest.caloriePerGram())
+                    .carbohydratePerGram(createFoodRequest.carbohydratePerGram())
+                    .proteinPerGram(createFoodRequest.proteinPerGram())
+                    .provincePerGram(createFoodRequest.provincePerGram())
+                    .grams(createFoodRequest.grams())
+                    .price(createFoodRequest.price())
+                    .imgPath(createFoodRequest.imgPath())
+                    .build();
+        }
+
+        public FoodResponse toFoodResponse(Food food){
+            return FoodResponse.builder()
+                    .id(food.getId())
+                    .name(food.getName())
+                    .caloriePerGram(food.getCaloriePerGram())
+                    .carbohydratePerGram(food.getCarbohydratePerGram())
+                    .proteinPerGram(food.getProteinPerGram())
+                    .provincePerGram(food.getProvincePerGram())
+                    .grams(food.getGrams())
+                    .price(food.getPrice())
+                    .imgPath(food.getImgPath())
                     .build();
         }
     }
@@ -189,6 +235,7 @@ public class FoodServiceTest {
         }
     }
 
-    private record FindByIdRequest(Long id) {
+    private record FindByIdFoodRequest(Long id) {
     }
+
 }

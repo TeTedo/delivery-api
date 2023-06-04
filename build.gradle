@@ -26,7 +26,8 @@ dependencies {
 	implementation('com.h2database:h2')
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.projectlombok:lombok:1.18.26'
+	testImplementation 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 
 }
 
