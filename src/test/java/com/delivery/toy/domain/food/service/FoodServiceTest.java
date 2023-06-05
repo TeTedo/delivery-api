@@ -2,6 +2,8 @@ package com.delivery.toy.domain.food.service;
 
 import com.delivery.toy.domain.food.dto.request.CreateFoodRequest;
 import com.delivery.toy.domain.food.dto.request.FindByFoodIdRequest;
+import com.delivery.toy.domain.food.dto.response.CreateFoodResponse;
+import com.delivery.toy.domain.food.dto.response.FoodResponse;
 import com.delivery.toy.domain.food.mapper.FoodMapper;
 import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.food.repository.FoodRepository;
@@ -61,29 +63,52 @@ public class FoodServiceTest {
         // given
         CreateFoodRequest foodDto = createFoodRequest();
 
-        Mockito.when(foodMapper.toFood(Mockito.any(CreateFoodRequest.class)))
+        Mockito.when(foodMapper.toFood(foodDto))
                 .thenReturn(mockedFood);
 
         Mockito.when(foodRepository.save(Mockito.any(Food.class)))
                 .thenReturn(mockedFood);
 
         // when
-        Food food = foodServiceImpl.save(foodDto);
-        System.out.println(food);
+        CreateFoodResponse foodResponse = foodServiceImpl.save(foodDto);
 
         // then
-        Assertions.assertThat(food)
-                .hasFieldOrPropertyWithValue("name","salad")
-                .hasFieldOrPropertyWithValue("caloriePerGram",1.2)
-                .hasFieldOrPropertyWithValue("carbohydratePerGram",0.03)
-                .hasFieldOrPropertyWithValue("proteinPerGram",0.05)
-                .hasFieldOrPropertyWithValue("provincePerGram",0.01)
-                .hasFieldOrPropertyWithValue("grams",250)
-                .hasFieldOrPropertyWithValue("price",12000)
-                .hasFieldOrPropertyWithValue("imgPath","tempImgPath");
+        Assertions.assertThat(foodResponse)
+                .hasFieldOrPropertyWithValue("status",true);
+
 
         Mockito.verify(foodMapper).toFood(foodDto);
-        Mockito.verify(foodRepository).save(food);
+        Mockito.verify(foodRepository).save(mockedFood);
+    }
+
+    @DisplayName("foodId를 받아 조회")
+    @Test
+    void findById() {
+        // given
+        saveFood();
+        Long foodId = 1L;
+
+        FindByFoodIdRequest findByFoodIdRequest = FindByFoodIdRequest
+                .builder()
+                .id(foodId)
+                .build();
+        FoodResponse response = foodResponse();
+
+        Mockito.when(foodMapper.toFoodResponse(Mockito.any(Food.class)))
+                .thenReturn(response);
+
+        Mockito.when(foodRepository.findById(foodId))
+                .thenReturn(Optional.of(mockedFood));
+
+
+        // when
+        FoodResponse foodResponse = foodServiceImpl.findById(findByFoodIdRequest);
+
+        // then
+        Assertions.assertThat(foodResponse)
+                .hasFieldOrPropertyWithValue("id",foodId);
+
+        Mockito.verify(foodRepository).findById(foodId);
     }
 
     private CreateFoodRequest createFoodRequest(){
@@ -109,28 +134,30 @@ public class FoodServiceTest {
                 .imgPath(imgPath)
                 .build();
     }
-    @DisplayName("foodId를 받아 조회")
-    @Test
-    void findById() {
-        // given
-        saveFood();
-        Long foodId = 1L;
 
-        FindByFoodIdRequest findByFoodIdRequest = FindByFoodIdRequest
+    private FoodResponse foodResponse(){
+        Long id = 1L;
+        String name = "salad";
+        double caloriePerGram = 1.2;
+        double carbohydratePerGram = 0.03;
+        double proteinPerGram = 0.05;
+        double provincePerGram = 0.01;
+        int grams = 250;
+        int price = 12000;
+        String imgPath = "tempImgPath";
+
+
+        return FoodResponse
                 .builder()
-                .id(foodId)
+                .id(id)
+                .name(name)
+                .caloriePerGram(caloriePerGram)
+                .carbohydratePerGram(carbohydratePerGram)
+                .proteinPerGram(proteinPerGram)
+                .provincePerGram(provincePerGram)
+                .grams(grams)
+                .price(price)
+                .imgPath(imgPath)
                 .build();
-
-        Mockito.when(foodRepository.findById(foodId))
-                .thenReturn(Optional.of(mockedFood));
-
-        // when
-        Food food = foodServiceImpl.findById(findByFoodIdRequest);
-
-        // then
-        Assertions.assertThat(food)
-                .hasFieldOrPropertyWithValue("id",foodId);
-
-        Mockito.verify(foodRepository).findById(foodId);
     }
 }
