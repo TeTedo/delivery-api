@@ -6,6 +6,7 @@ import com.delivery.toy.domain.food.mapper.FoodMapper;
 import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.food.repository.FoodRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +28,33 @@ public class FoodServiceTest {
     @InjectMocks
     private FoodServiceImpl foodServiceImpl;
 
+    Food mockedFood;
+
+    @BeforeEach
+    void setUp(){
+        Long foodId = 1L;
+        String name = "salad";
+        double caloriePerGram = 1.2;
+        double carbohydratePerGram = 0.03;
+        double proteinPerGram = 0.05;
+        double provincePerGram = 0.01;
+        int grams = 250;
+        int price = 12000;
+        String imgPath = "tempImgPath";
+
+        this.mockedFood = Food.builder()
+                .id(foodId)
+                .name(name)
+                .caloriePerGram(caloriePerGram)
+                .carbohydratePerGram(carbohydratePerGram)
+                .proteinPerGram(proteinPerGram)
+                .provincePerGram(provincePerGram)
+                .grams(grams)
+                .price(price)
+                .imgPath(imgPath)
+                .build();
+    }
+
     @DisplayName("FoodRequestDto를 받아Entity로 바꾸고 저장")
     @Test
     void saveFood(){
@@ -42,17 +70,6 @@ public class FoodServiceTest {
 
         CreateFoodRequest foodDto = CreateFoodRequest
                 .builder()
-                .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
-                .price(price)
-                .imgPath(imgPath)
-                .build();
-
-        Food mockedFood = Food.builder()
                 .name(name)
                 .caloriePerGram(caloriePerGram)
                 .carbohydratePerGram(carbohydratePerGram)
@@ -93,32 +110,11 @@ public class FoodServiceTest {
     void findById() {
         // given
         saveFood();
-
         Long foodId = 1L;
-        String name = "salad";
-        double caloriePerGram = 1.2;
-        double carbohydratePerGram = 0.03;
-        double proteinPerGram = 0.05;
-        double provincePerGram = 0.01;
-        int grams = 250;
-        int price = 12000;
-        String imgPath = "tempImgPath";
 
         FindByFoodIdRequest findByFoodIdRequest = FindByFoodIdRequest
                 .builder()
                 .id(foodId)
-                .build();
-
-        Food mockedFood = Food.builder()
-                .id(foodId)
-                .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
-                .price(price)
-                .imgPath(imgPath)
                 .build();
 
         Mockito.when(foodRepository.findById(foodId))
