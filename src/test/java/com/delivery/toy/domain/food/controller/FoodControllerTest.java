@@ -108,41 +108,4 @@ public class FoodControllerTest {
                 .imgPath(imgPath)
                 .build();
     }
-
-    private Food createFood(){
-        Long foodId = 1L;
-        String name = "salad";
-        double caloriePerGram = 1.2;
-        double carbohydratePerGram = 0.03;
-        double proteinPerGram = 0.05;
-        double provincePerGram = 0.01;
-        int grams = 250;
-        int price = 12000;
-        String imgPath = "tempImgPath";
-
-        return Food.builder()
-                .id(foodId)
-                .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
-                .price(price)
-                .imgPath(imgPath)
-                .build();
-    }
-
-    private FoodResponse foodResponse(Food food){
-        return FoodResponse.builder()
-                .id(food.getId())
-                .caloriePerGram(food.getCaloriePerGram())
-                .carbohydratePerGram(food.getCarbohydratePerGram())
-                .proteinPerGram(food.getProteinPerGram())
-                .provincePerGram(food.getProvincePerGram())
-                .grams(food.getGrams())
-                .price(food.getPrice())
-                .imgPath(food.getImgPath())
-                .build();
-    }
 }
