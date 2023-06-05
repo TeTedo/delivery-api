@@ -11,22 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-@RequiredArgsConstructor
-@Service
-public class FoodService {
+public interface FoodService {
 
-    private final FoodMapper foodMapper;
-    private final FoodRepository foodRepository;
+    Food save(CreateFoodRequest foodDto);
 
-    public Food save(CreateFoodRequest foodDto) {
-        Food food = foodMapper.toFood(foodDto);
-        Assert.notNull(food, "food는 null값이 될수 없습니다.");
-        return foodRepository.save(food);
-    }
+    Food findById(FindByFoodIdRequest findByFoodIdRequest);
 
-    public Food findById(FindByFoodIdRequest findByFoodIdRequest) {
-        Food food =  foodRepository.findById(findByFoodIdRequest.id())
-                .orElseThrow(()-> new FoodIllegalException("해당 id를 가진 Food가 없습니다."));
-        return food;
-    }
 }

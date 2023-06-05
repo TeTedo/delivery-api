@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 @ExtendWith(MockitoExtension.class)
 public class FoodServiceTest {
     @Mock
@@ -23,7 +25,7 @@ public class FoodServiceTest {
     private FoodRepository foodRepository;
 
     @InjectMocks
-    private FoodService foodService;
+    private FoodServiceImpl foodServiceImpl;
 
     @DisplayName("FoodRequestDto를 받아Entity로 바꾸고 저장")
     @Test
@@ -50,11 +52,26 @@ public class FoodServiceTest {
                 .imgPath(imgPath)
                 .build();
 
+        Food mockedFood = Food.builder()
+                .name(name)
+                .caloriePerGram(caloriePerGram)
+                .carbohydratePerGram(carbohydratePerGram)
+                .proteinPerGram(proteinPerGram)
+                .provincePerGram(provincePerGram)
+                .grams(grams)
+                .price(price)
+                .imgPath(imgPath)
+                .build();
 
-        Assertions.assertThat(foodDto).isNotNull();
+        Mockito.when(foodMapper.toFood(Mockito.any(CreateFoodRequest.class)))
+                .thenReturn(mockedFood);
+
+        Mockito.when(foodRepository.save(Mockito.any(Food.class)))
+                .thenReturn(mockedFood);
 
         // when
-        Food food = foodService.save(foodDto);
+        Food food = foodServiceImpl.save(foodDto);
+        System.out.println(food);
 
         // then
         Assertions.assertThat(food)
@@ -74,14 +91,46 @@ public class FoodServiceTest {
     @DisplayName("foodId를 받아 조회")
     @Test
     void findById() {
+        // given
         saveFood();
+
+        Long foodId = 1L;
+        String name = "salad";
+        double caloriePerGram = 1.2;
+        double carbohydratePerGram = 0.03;
+        double proteinPerGram = 0.05;
+        double provincePerGram = 0.01;
+        int grams = 250;
+        int price = 12000;
+        String imgPath = "tempImgPath";
+
         FindByFoodIdRequest findByFoodIdRequest = FindByFoodIdRequest
                 .builder()
-                .id(1L)
+                .id(foodId)
                 .build();
-        Food food = foodService.findById(findByFoodIdRequest);
 
+        Food mockedFood = Food.builder()
+                .id(foodId)
+                .name(name)
+                .caloriePerGram(caloriePerGram)
+                .carbohydratePerGram(carbohydratePerGram)
+                .proteinPerGram(proteinPerGram)
+                .provincePerGram(provincePerGram)
+                .grams(grams)
+                .price(price)
+                .imgPath(imgPath)
+                .build();
+
+        Mockito.when(foodRepository.findById(foodId))
+                .thenReturn(Optional.of(mockedFood));
+
+        // when
+        Food food = foodServiceImpl.findById(findByFoodIdRequest);
+
+        // then
         Assertions.assertThat(food)
-                .hasFieldOrPropertyWithValue("id",1L);
+                .hasFieldOrPropertyWithValue("id",foodId);
+
+        Mockito.verify(foodRepository).findById(foodId);
     }
 }

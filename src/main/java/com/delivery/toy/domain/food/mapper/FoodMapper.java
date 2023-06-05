@@ -3,7 +3,6 @@ package com.delivery.toy.domain.food.mapper;
 import com.delivery.toy.domain.food.dto.request.CreateFoodRequest;
 import com.delivery.toy.domain.food.dto.response.FoodResponse;
 import com.delivery.toy.domain.food.model.Food;
-import org.springframework.stereotype.Component;
 
 public class FoodMapper {
 

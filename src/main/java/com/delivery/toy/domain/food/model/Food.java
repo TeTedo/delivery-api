@@ -56,6 +56,7 @@ public class Food {
         Assert.isTrue(provincePerGram > 0, "그램당 지방은 0보다 큽니다");
         Assert.isTrue(price > 0, "가격은 0 보다 커야 합니다.");
         Assert.notNull(imgPath, "사진 url은 필수입니다.");
+
         this.id = id;
         this.name = name;
         this.caloriePerGram = caloriePerGram;
