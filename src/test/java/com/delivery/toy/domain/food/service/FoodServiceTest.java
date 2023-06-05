@@ -59,26 +59,7 @@ public class FoodServiceTest {
     @Test
     void saveFood(){
         // given
-        String name = "salad";
-        double caloriePerGram = 1.2;
-        double carbohydratePerGram = 0.03;
-        double proteinPerGram = 0.05;
-        double provincePerGram = 0.01;
-        int grams = 250;
-        int price = 12000;
-        String imgPath = "tempImgPath";
-
-        CreateFoodRequest foodDto = CreateFoodRequest
-                .builder()
-                .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
-                .price(price)
-                .imgPath(imgPath)
-                .build();
+        CreateFoodRequest foodDto = createFoodRequest();
 
         Mockito.when(foodMapper.toFood(Mockito.any(CreateFoodRequest.class)))
                 .thenReturn(mockedFood);
@@ -105,6 +86,29 @@ public class FoodServiceTest {
         Mockito.verify(foodRepository).save(food);
     }
 
+    private CreateFoodRequest createFoodRequest(){
+        String name = "salad";
+        double caloriePerGram = 1.2;
+        double carbohydratePerGram = 0.03;
+        double proteinPerGram = 0.05;
+        double provincePerGram = 0.01;
+        int grams = 250;
+        int price = 12000;
+        String imgPath = "tempImgPath";
+
+
+        return CreateFoodRequest
+                .builder()
+                .name(name)
+                .caloriePerGram(caloriePerGram)
+                .carbohydratePerGram(carbohydratePerGram)
+                .proteinPerGram(proteinPerGram)
+                .provincePerGram(provincePerGram)
+                .grams(grams)
+                .price(price)
+                .imgPath(imgPath)
+                .build();
+    }
     @DisplayName("foodId를 받아 조회")
     @Test
     void findById() {
