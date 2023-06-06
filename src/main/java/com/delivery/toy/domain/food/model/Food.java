@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.springframework.util.Assert;
 
 @Getter
+@Table(name = "foods")
 @Entity
 public class Food {
 

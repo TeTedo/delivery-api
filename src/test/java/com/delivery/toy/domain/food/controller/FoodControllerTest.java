@@ -72,11 +72,19 @@ public class FoodControllerTest {
     void findById() throws Exception{
         // given
         Long id = 1L;
-        foodServiceImpl.save(createFoodRequest());
+        FindByFoodIdRequest request = FindByFoodIdRequest
+                .builder()
+                .id(id)
+                .build();
+        FoodResponse response = foodResponse(id);
+
+
+        Mockito.when(foodServiceImpl.findById(request))
+                .thenReturn(response);
 
         // when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/foods/1")
+                MockMvcRequestBuilders.get("/foods/" + id)
         );
 
         // then
@@ -98,6 +106,31 @@ public class FoodControllerTest {
 
         return CreateFoodRequest
                 .builder()
+                .name(name)
+                .caloriePerGram(caloriePerGram)
+                .carbohydratePerGram(carbohydratePerGram)
+                .proteinPerGram(proteinPerGram)
+                .provincePerGram(provincePerGram)
+                .grams(grams)
+                .price(price)
+                .imgPath(imgPath)
+                .build();
+    }
+
+    private FoodResponse foodResponse(Long id){
+        String name = "salad";
+        double caloriePerGram = 1.2;
+        double carbohydratePerGram = 0.03;
+        double proteinPerGram = 0.05;
+        double provincePerGram = 0.01;
+        int grams = 250;
+        int price = 12000;
+        String imgPath = "tempImgPath";
+
+
+        return FoodResponse
+                .builder()
+                .id(id)
                 .name(name)
                 .caloriePerGram(caloriePerGram)
                 .carbohydratePerGram(carbohydratePerGram)
