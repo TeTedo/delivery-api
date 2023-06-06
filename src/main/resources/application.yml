@@ -1,9 +1,26 @@
 spring:
+#  DB
   datasource:
-    driverClassname: org.mariadb.jdbc.Driver
+    driverClassname: com.mysql.cj.jdbc.Driver
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-  spring:
-    config:
-      import: optional:file:.env[.properties]
+#  env파일 설정
+  config:
+    import: optional:file:.env[.properties]
+#   Jpa
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+#   flyway
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    url: ${FLYWAY_URL}
+    user: ${FLYWAY_USER}
+    password: ${FLYWAY_PASSWORD}
