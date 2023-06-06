@@ -25,11 +25,15 @@ public class FoodController {
 
     @GetMapping("/foods/{food-id}")
     public ResponseEntity<FoodResponse>  findByFoodId(
-            @PathVariable("food-id") FindByFoodIdRequest request
+            @PathVariable("food-id") Long id
             ){
+        FindByFoodIdRequest request = FindByFoodIdRequest
+                .builder()
+                .id(id)
+                .build();
+
         FoodResponse foodResponse = foodServiceImpl.findById(request);
 
         return ResponseEntity.ok().body(foodResponse);
     }
-
 }

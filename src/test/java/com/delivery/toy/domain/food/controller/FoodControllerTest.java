@@ -1,13 +1,9 @@
 package com.delivery.toy.domain.food.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.delivery.toy.domain.food.dto.request.CreateFoodRequest;
 import com.delivery.toy.domain.food.dto.request.FindByFoodIdRequest;
 import com.delivery.toy.domain.food.dto.response.CreateFoodResponse;
 import com.delivery.toy.domain.food.dto.response.FoodResponse;
-import com.delivery.toy.domain.food.model.Food;
-import com.delivery.toy.domain.food.repository.FoodRepository;
 import com.delivery.toy.domain.food.service.FoodServiceImpl;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +20,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class FoodControllerTest {

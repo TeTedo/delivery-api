@@ -3,40 +3,43 @@ package com.delivery.toy.domain.food.model;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
+
 
 @Getter
 @Table(name = "foods")
+@NoArgsConstructor
 @Entity
 public class Food {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private  final Long id;
+    private  Long id;
 
     @Column
-    private  final String name;
+    private  String name;
 
     @Column
-    private  final double caloriePerGram;
+    private  double caloriePerGram;
 
     @Column
-    private  final double carbohydratePerGram;
+    private  double carbohydratePerGram;
 
     @Column
-    private  final double proteinPerGram;
+    private  double proteinPerGram;
 
     @Column
-    private  final double provincePerGram;
+    private  double provincePerGram;
 
     @Column
-    private  final int grams;
+    private  int grams;
 
     @Column
-    private  final int price;
+    private  int price;
 
     @Column
-    private  final String imgPath;
+    private  String imgPath;
 
     @Builder
     public Food(

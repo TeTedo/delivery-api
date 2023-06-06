@@ -30,6 +30,8 @@ dependencies {
 	implementation('com.h2database:h2')
 	// mysql connector
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	// dev tools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// Gson
