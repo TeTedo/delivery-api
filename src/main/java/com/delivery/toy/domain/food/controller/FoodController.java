@@ -7,10 +7,7 @@ import com.delivery.toy.domain.food.dto.response.FoodResponse;
 import com.delivery.toy.domain.food.service.FoodServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,7 +15,7 @@ public class FoodController {
 
     private final FoodServiceImpl foodServiceImpl;
 
-    @RequestMapping(value = "/foods")
+    @PostMapping("/foods")
     public ResponseEntity<CreateFoodResponse>  createFood(
             @RequestBody CreateFoodRequest request
             ){
@@ -26,7 +23,7 @@ public class FoodController {
         return ResponseEntity.ok().body(response);
     }
 
-    @RequestMapping(value = "/foods/{food-id}")
+    @GetMapping("/foods/{food-id}")
     public ResponseEntity<FoodResponse>  findByFoodId(
             @PathVariable("food-id") FindByFoodIdRequest request
             ){
