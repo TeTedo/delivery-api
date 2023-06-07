@@ -18,16 +18,16 @@ public class FoodController {
 
     @PostMapping("/")
     public ResponseEntity<CreateFoodResponse>  createFood(
-            @RequestBody CreateFoodRequest request
-            ){
+            @RequestBody CreateFoodRequest request) {
+
         CreateFoodResponse response = foodServiceImpl.save(request);
         return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/{food-id}")
     public ResponseEntity<FoodResponse>  findByFoodId(
-            @PathVariable("food-id") Long id
-            ){
+            @PathVariable("food-id") Long id) {
+
         FindByFoodIdRequest request = FindByFoodIdRequest
                 .builder()
                 .id(id)
