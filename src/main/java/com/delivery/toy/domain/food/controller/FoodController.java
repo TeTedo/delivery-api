@@ -9,13 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequestMapping(value = "/foods")
 @RequiredArgsConstructor
 @RestController
 public class FoodController {
 
     private final FoodServiceImpl foodServiceImpl;
 
-    @PostMapping("/foods")
+    @PostMapping("/")
     public ResponseEntity<CreateFoodResponse>  createFood(
             @RequestBody CreateFoodRequest request
             ){
@@ -23,7 +24,7 @@ public class FoodController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/foods/{food-id}")
+    @GetMapping("/{food-id}")
     public ResponseEntity<FoodResponse>  findByFoodId(
             @PathVariable("food-id") Long id
             ){
