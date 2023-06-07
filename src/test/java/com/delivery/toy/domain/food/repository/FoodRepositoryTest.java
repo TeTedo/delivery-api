@@ -1,6 +1,6 @@
 package com.delivery.toy.domain.food.repository;
 
-import com.delivery.toy.domain.food.exception.FoodIllegalArgumentException;
+import com.delivery.toy.domain.food.exception.FoodNotFoundException;
 import com.delivery.toy.domain.food.model.Food;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +58,7 @@ public class FoodRepositoryTest {
 
         // when
         Food foundFood = foodRepository.findById(1L)
-                .orElseThrow(()-> new FoodIllegalArgumentException("해당 Id는 없는 Food입니다."));
+                .orElseThrow(()-> new FoodNotFoundException("해당 Id는 없는 Food입니다."));
 
         // then
         Assertions.assertThat(foundFood).isEqualTo(food);

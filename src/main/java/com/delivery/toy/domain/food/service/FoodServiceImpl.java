@@ -4,7 +4,7 @@ import com.delivery.toy.domain.food.dto.request.CreateFoodRequest;
 import com.delivery.toy.domain.food.dto.request.FindByFoodIdRequest;
 import com.delivery.toy.domain.food.dto.response.CreateFoodResponse;
 import com.delivery.toy.domain.food.dto.response.FoodResponse;
-import com.delivery.toy.domain.food.exception.FoodIllegalArgumentException;
+import com.delivery.toy.domain.food.exception.FoodNotFoundException;
 import com.delivery.toy.domain.food.mapper.FoodMapper;
 import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.food.repository.FoodRepository;
@@ -36,7 +36,7 @@ public class FoodServiceImpl implements FoodService{
     @Override
     public FoodResponse findById(FindByFoodIdRequest findByFoodIdRequest) {
         Food food = foodRepository.findById(findByFoodIdRequest.id())
-                .orElseThrow(()-> new FoodIllegalArgumentException("해당 id를 가진 Food가 없습니다."));
+                .orElseThrow(()-> new FoodNotFoundException("해당 id를 가진 Food가 없습니다."));
         
         return foodMapper.toFoodResponse(food);
     }

@@ -17,28 +17,28 @@ public class Food {
     @Id
     private  Long id;
 
-    @Column
+    @Column(nullable = false, length = 100)
     private  String name;
 
-    @Column
+    @Column(nullable = false)
     private  double caloriePerGram;
 
-    @Column
+    @Column(nullable = false)
     private  double carbohydratePerGram;
 
-    @Column
+    @Column(nullable = false)
     private  double proteinPerGram;
 
-    @Column
+    @Column(nullable = false)
     private  double provincePerGram;
 
-    @Column
+    @Column(nullable = false)
     private  int grams;
 
-    @Column
+    @Column(nullable = false)
     private  int price;
 
-    @Column
+    @Column(nullable = false, length = 255)
     private  String imgPath;
 
     @Builder

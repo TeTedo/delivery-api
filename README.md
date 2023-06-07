@@ -13,6 +13,11 @@
 
 [this는 꼭 써야 하나?](https://diary-blockchain.tistory.com/303)
 
+---
+## 정리할 것들
+- 직렬화, 역직렬화
+- 구글 코딩 컨벤션
+- 
 
 
 # API URI
