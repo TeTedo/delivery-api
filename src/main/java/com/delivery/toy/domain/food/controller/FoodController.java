@@ -16,7 +16,7 @@ public class FoodController {
 
     private final FoodServiceImpl foodServiceImpl;
 
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<CreateFoodResponse>  createFood(
             @RequestBody CreateFoodRequest request) {
 
