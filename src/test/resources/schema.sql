@@ -1,7 +1,3 @@
-DROP TABLE IF EXISTS payments;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS foods;
-
 CREATE TABLE IF NOT EXISTS `foods`
 (
     id                      bigint          NOT NULL    AUTO_INCREMENT  PRIMARY KEY,
