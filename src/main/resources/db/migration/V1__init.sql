@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS `foods`
 (
-    id      bigint AUTO_INCREMENT
-     PRIMARY KEY ,
+    id                      bigint          NOT NULL    AUTO_INCREMENT  PRIMARY KEY,
     name                    varchar(100)    NOT NULL,
     calorie_per_gram        double          NOT NULL,
     carbohydrate_per_gram   double          NOT NULL,
