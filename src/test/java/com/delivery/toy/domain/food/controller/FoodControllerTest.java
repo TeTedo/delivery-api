@@ -44,7 +44,7 @@ public class FoodControllerTest {
     @Test
     void save() throws Exception{
         // given
-        CreateFoodRequest request = createFoodRequest();
+        CreateFoodRequest request = getCreateFoodRequest();
         CreateFoodResponse response = CreateFoodResponse
                 .builder()
                 .status(true)
@@ -66,33 +66,7 @@ public class FoodControllerTest {
                 .andReturn();
     }
 
-    @DisplayName("Get /foods/{food-id}")
-    @Test
-    void findById() throws Exception{
-        // given
-        Long id = 1L;
-        FindByFoodIdRequest request = FindByFoodIdRequest
-                .builder()
-                .id(id)
-                .build();
-        FoodResponse response = foodResponse(id);
-
-
-        Mockito.when(foodServiceImpl.findById(request))
-                .thenReturn(response);
-
-        // when
-        ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/foods/" + id)
-        );
-
-        // then
-        MvcResult mvcResult =  resultActions.andExpect(status().isOk())
-                .andExpect(jsonPath("id",id).exists())
-                .andReturn();
-    }
-
-    private CreateFoodRequest createFoodRequest(){
+    private CreateFoodRequest getCreateFoodRequest(){
         String name = "salad";
         double caloriePerGram = 1.2;
         double carbohydratePerGram = 0.03;
@@ -116,7 +90,33 @@ public class FoodControllerTest {
                 .build();
     }
 
-    private FoodResponse foodResponse(Long id){
+    @DisplayName("Get /foods/{food-id}")
+    @Test
+    void findById() throws Exception{
+        // given
+        Long id = 1L;
+        FindByFoodIdRequest request = FindByFoodIdRequest
+                .builder()
+                .id(id)
+                .build();
+        FoodResponse response = getFoodResponse(id);
+
+
+        Mockito.when(foodServiceImpl.findById(request))
+                .thenReturn(response);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get("/foods/" + id)
+        );
+
+        // then
+        MvcResult mvcResult =  resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("id",id).exists())
+                .andReturn();
+    }
+
+    private FoodResponse getFoodResponse(Long id){
         String name = "salad";
         double caloriePerGram = 1.2;
         double carbohydratePerGram = 0.03;

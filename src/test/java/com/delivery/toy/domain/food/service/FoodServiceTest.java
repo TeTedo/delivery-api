@@ -61,7 +61,7 @@ public class FoodServiceTest {
     @Test
     void saveFood(){
         // given
-        CreateFoodRequest foodDto = createFoodRequest();
+        CreateFoodRequest foodDto = getCreateFoodRequest();
 
         Mockito.when(foodMapper.toFood(foodDto))
                 .thenReturn(mockedFood);
@@ -81,37 +81,7 @@ public class FoodServiceTest {
         Mockito.verify(foodRepository).save(mockedFood);
     }
 
-    @DisplayName("foodId를 받아 조회")
-    @Test
-    void findById() {
-        // given
-        saveFood();
-        Long foodId = 1L;
-
-        FindByFoodIdRequest findByFoodIdRequest = FindByFoodIdRequest
-                .builder()
-                .id(foodId)
-                .build();
-        FoodResponse response = foodResponse();
-
-        Mockito.when(foodMapper.toFoodResponse(Mockito.any(Food.class)))
-                .thenReturn(response);
-
-        Mockito.when(foodRepository.findById(foodId))
-                .thenReturn(Optional.of(mockedFood));
-
-
-        // when
-        FoodResponse foodResponse = foodServiceImpl.findById(findByFoodIdRequest);
-
-        // then
-        Assertions.assertThat(foodResponse)
-                .hasFieldOrPropertyWithValue("id",foodId);
-
-        Mockito.verify(foodRepository).findById(foodId);
-    }
-
-    private CreateFoodRequest createFoodRequest(){
+    private CreateFoodRequest getCreateFoodRequest(){
         String name = "salad";
         double caloriePerGram = 1.2;
         double carbohydratePerGram = 0.03;
@@ -135,7 +105,37 @@ public class FoodServiceTest {
                 .build();
     }
 
-    private FoodResponse foodResponse(){
+    @DisplayName("foodId를 받아 조회")
+    @Test
+    void findById() {
+        // given
+        saveFood();
+        Long foodId = 1L;
+
+        FindByFoodIdRequest findByFoodIdRequest = FindByFoodIdRequest
+                .builder()
+                .id(foodId)
+                .build();
+        FoodResponse response = getFoodResponse();
+
+        Mockito.when(foodMapper.toFoodResponse(Mockito.any(Food.class)))
+                .thenReturn(response);
+
+        Mockito.when(foodRepository.findById(foodId))
+                .thenReturn(Optional.of(mockedFood));
+
+
+        // when
+        FoodResponse foodResponse = foodServiceImpl.findById(findByFoodIdRequest);
+
+        // then
+        Assertions.assertThat(foodResponse)
+                .hasFieldOrPropertyWithValue("id",foodId);
+
+        Mockito.verify(foodRepository).findById(foodId);
+    }
+
+    private FoodResponse getFoodResponse(){
         Long id = 1L;
         String name = "salad";
         double caloriePerGram = 1.2;
