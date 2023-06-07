@@ -17,17 +17,25 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// Jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	// MYSQL Driver
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.1.4'
+
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	// flyway
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-mysql'
+	// mapstruct
+	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	// h2
 	implementation('com.h2database:h2')
+	// mysql connector
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	// dev tools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
+	// Gson
+	testImplementation 'com.google.code.gson:gson:2.10.1'
 
 }
 
