@@ -41,7 +41,6 @@ public class FoodRepositoryTest extends RepositoryTest {
     }
 
     @DisplayName("Food 저장 테스트")
-    @Transactional
     @Test
     void save(){
         // when
@@ -52,7 +51,6 @@ public class FoodRepositoryTest extends RepositoryTest {
     }
 
     @DisplayName("Food 조회 테스트")
-    @Transactional
     @Test
     void find(){
         // given

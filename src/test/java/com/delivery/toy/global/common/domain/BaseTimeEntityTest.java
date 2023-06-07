@@ -42,7 +42,6 @@ public class BaseTimeEntityTest extends RepositoryTest {
     }
 
     @DisplayName("BaseTimeEntity column 확인")
-    @Transactional
     @Test
     void checkBaseTimeEntity(){
         // given
