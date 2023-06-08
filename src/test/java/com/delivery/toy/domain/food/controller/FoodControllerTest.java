@@ -50,7 +50,7 @@ public class FoodControllerTest {
                 .status(true)
                 .build();
 
-        Mockito.when(foodServiceImpl.save(request))
+        Mockito.when(foodServiceImpl.saveFood(request))
                 .thenReturn(response);
 
         // when
@@ -102,7 +102,7 @@ public class FoodControllerTest {
         FoodResponse response = getFoodResponse(id);
 
 
-        Mockito.when(foodServiceImpl.findById(request))
+        Mockito.when(foodServiceImpl.findByFoodId(request))
                 .thenReturn(response);
 
         // when

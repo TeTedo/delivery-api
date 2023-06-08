@@ -20,7 +20,7 @@ public class FoodServiceImpl implements FoodService{
     private final FoodRepository foodRepository;
 
     @Override
-    public CreateFoodResponse save(CreateFoodRequest foodDto) {
+    public CreateFoodResponse saveFood(CreateFoodRequest foodDto) {
         Food food = foodMapper.toFood(foodDto);
         Assert.notNull(food, "food는 null값이 될수 없습니다.");
         
@@ -34,7 +34,7 @@ public class FoodServiceImpl implements FoodService{
     }
 
     @Override
-    public FoodResponse findById(FindByFoodIdRequest findByFoodIdRequest) {
+    public FoodResponse findByFoodId(FindByFoodIdRequest findByFoodIdRequest) {
         Food food = foodRepository.findById(findByFoodIdRequest.id())
                 .orElseThrow(()-> new FoodNotFoundException("해당 id를 가진 Food가 없습니다."));
         

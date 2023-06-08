@@ -20,7 +20,7 @@ public class FoodController {
     public ResponseEntity<CreateFoodResponse>  createFood(
             @RequestBody CreateFoodRequest request) {
 
-        CreateFoodResponse response = foodServiceImpl.save(request);
+        CreateFoodResponse response = foodServiceImpl.saveFood(request);
         return ResponseEntity.ok().body(response);
     }
 
@@ -33,7 +33,7 @@ public class FoodController {
                 .id(id)
                 .build();
 
-        FoodResponse foodResponse = foodServiceImpl.findById(request);
+        FoodResponse foodResponse = foodServiceImpl.findByFoodId(request);
 
         return ResponseEntity.ok().body(foodResponse);
     }

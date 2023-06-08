@@ -7,8 +7,8 @@ import com.delivery.toy.domain.food.dto.response.FoodResponse;
 
 public interface FoodService {
 
-    CreateFoodResponse save(CreateFoodRequest foodDto);
+    CreateFoodResponse saveFood(CreateFoodRequest foodDto);
 
-    FoodResponse findById(FindByFoodIdRequest findByFoodIdRequest);
+    FoodResponse findByFoodId(FindByFoodIdRequest findByFoodIdRequest);
 
 }

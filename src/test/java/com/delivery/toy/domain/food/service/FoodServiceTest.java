@@ -70,7 +70,7 @@ public class FoodServiceTest {
                 .thenReturn(mockedFood);
 
         // when
-        CreateFoodResponse foodResponse = foodServiceImpl.save(foodDto);
+        CreateFoodResponse foodResponse = foodServiceImpl.saveFood(foodDto);
 
         // then
         Assertions.assertThat(foodResponse)
@@ -126,7 +126,7 @@ public class FoodServiceTest {
 
 
         // when
-        FoodResponse foodResponse = foodServiceImpl.findById(findByFoodIdRequest);
+        FoodResponse foodResponse = foodServiceImpl.findByFoodId(findByFoodIdRequest);
 
         // then
         Assertions.assertThat(foodResponse)
