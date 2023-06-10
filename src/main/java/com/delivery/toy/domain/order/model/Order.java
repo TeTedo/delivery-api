@@ -10,8 +10,8 @@ import org.hibernate.annotations.Target;
 import org.springframework.util.Assert;
 
 @Getter
-@Table(name = "orders")
 @NoArgsConstructor
+@Table(name = "orders")
 @Entity
 public class Order extends BaseTImeEntity {
 
