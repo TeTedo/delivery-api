@@ -1,5 +1,6 @@
 package com.delivery.toy.domain.food.model;
 
+import com.delivery.toy.global.common.domain.BaseTImeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import org.springframework.util.Assert;
 @Table(name = "foods")
 @NoArgsConstructor
 @Entity
-public class Food {
+public class Food extends BaseTImeEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,16 +21,16 @@ public class Food {
     @Column(nullable = false, length = 100)
     private  String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "calorie_per_gram")
     private  double caloriePerGram;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "carbohydrate_per_gram")
     private  double carbohydratePerGram;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "protein_per_gram")
     private  double proteinPerGram;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "province_per_gram")
     private  double provincePerGram;
 
     @Column(nullable = false)
