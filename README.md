@@ -14,10 +14,11 @@
 [this는 꼭 써야 하나?](https://diary-blockchain.tistory.com/303)
 
 ---
-## 정리할 것들
+## 정리, 공부할 것들
 - 직렬화, 역직렬화
 - 구글 코딩 컨벤션
-- 
+- spring security 인증, 인가
+- EntityManager를 직접 다루는 JPA 구현
 
 
 # API URI
@@ -36,8 +37,8 @@
 | 주문 전체 조회 | GET    | /orders            |
 | 주문 단일 조회 | GET    | /orders/{order-id} |
 
-| 기능    | Method | URI                  |
-|-------|--------|----------------------|
-| 결제 시도 | POST   | /orders              |
-| 결제 확인 | GET    | /orders/{payment-id} |
+| 기능    | Method | URI                    |
+|-------|--------|------------------------|
+| 결제 시도 | POST   | /payments              |
+| 결제 확인 | GET    | /payments/{payment-id} |
 ---
