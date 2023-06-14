@@ -81,7 +81,7 @@ public class OrderServiceTest {
 
     @DisplayName("foodId와 count를 받아 주문을 저장한다.")
     @Test
-    void save() throws Exception{
+    void save() {
         // given
         Long foodId = 1L;
         int userId = 1;
@@ -91,8 +91,8 @@ public class OrderServiceTest {
 
         OrderRequest orderRequest = getOrderRequest(userId, count);
 
-        Long orderId = 1L;
-        CreateOrderResponse mockResponse = getOrderResponse(userId, count, orderId);
+        boolean status = true;
+        CreateOrderResponse mockResponse = getOrderResponse(status);
 
         Mockito.when(mockedFoodRepository.findById(foodId))
                 .thenReturn(Optional.of(food));
@@ -103,7 +103,7 @@ public class OrderServiceTest {
         Mockito.when(orderRepository.save(Mockito.any(Order.class)))
                 .thenReturn(mockedOrder);
 
-        Mockito.when(orderMapper.toCreateOrderResponse(Mockito.any(Order.class)))
+        Mockito.when(orderMapper.toCreateOrderResponse(status))
                 .thenReturn(mockResponse);
 
         // when
@@ -112,22 +112,17 @@ public class OrderServiceTest {
         // then
         Assertions.assertThat(response).isNotNull();
         Assertions.assertThat(response).isEqualTo(mockResponse);
-        Assertions.assertThat(response.food()).isEqualTo(food);
-        Assertions.assertThat(response.userId()).isEqualTo(userId);
-        Assertions.assertThat(response.count()).isEqualTo(count);
+        Assertions.assertThat(response.status()).isEqualTo(status);
 
         Mockito.verify(mockedFoodRepository).findById(foodId);
         Mockito.verify(orderMapper).toOrder(orderRequest);
         Mockito.verify(orderRepository).save(mockedOrder);
-        Mockito.verify(orderMapper).toCreateOrderResponse(mockedOrder);
+        Mockito.verify(orderMapper).toCreateOrderResponse(status);
     }
 
-    private CreateOrderResponse getOrderResponse(int userId, int count, Long orderId) {
+    private CreateOrderResponse getOrderResponse(boolean status) {
         return CreateOrderResponse.builder()
-                .id(orderId)
-                .food(food)
-                .userId(userId)
-                .count(count)
+                .status(status)
                 .build();
     }
 

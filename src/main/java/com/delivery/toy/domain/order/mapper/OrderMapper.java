@@ -8,12 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMapper {
-    public CreateOrderResponse toCreateOrderResponse(Order order){
+    public CreateOrderResponse toCreateOrderResponse(boolean status){
         return CreateOrderResponse.builder()
-                .id(order.getId())
-                .food(order.getFood())
-                .userId(order.getUserId())
-                .count(order.getCount())
+                .status(status)
                 .build();
     }
 

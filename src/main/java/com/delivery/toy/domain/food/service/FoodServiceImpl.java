@@ -27,9 +27,11 @@ public class FoodServiceImpl implements FoodService{
         Food savedFood = foodRepository.save(food);
         Assert.isTrue(savedFood.equals(food), "food 저장 실패");
 
+        boolean status = true;
+
         return CreateFoodResponse
                 .builder()
-                .status(true)
+                .status(status)
                 .build();
     }
 

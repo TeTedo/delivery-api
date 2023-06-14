@@ -16,6 +16,7 @@ import com.delivery.toy.domain.order.model.Order;
 import com.delivery.toy.domain.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @RequiredArgsConstructor
 @Service
@@ -43,7 +44,10 @@ public class OrderServiceImpl implements OrderService{
         Order order = orderMapper.toOrder(orderRequest);
 
         Order savedOrder = orderRepository.save(order);
+        Assert.isTrue(savedOrder.equals(order), "order 저장 실패");
 
-        return orderMapper.toCreateOrderResponse(savedOrder);
+        boolean status = true;
+
+        return orderMapper.toCreateOrderResponse(status);
     }
 }
