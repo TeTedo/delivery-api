@@ -2,7 +2,6 @@ package com.delivery.toy.domain.food.controller;
 
 import com.delivery.toy.domain.food.dto.request.CreateFoodRequest;
 import com.delivery.toy.domain.food.dto.request.FindByFoodIdRequest;
-import com.delivery.toy.domain.food.dto.response.CreateFoodResponse;
 import com.delivery.toy.domain.food.dto.response.FoodResponse;
 import com.delivery.toy.domain.food.service.FoodServiceImpl;
 import com.google.gson.Gson;
@@ -45,10 +44,9 @@ public class FoodControllerTest {
     void save() throws Exception{
         // given
         CreateFoodRequest request = getCreateFoodRequest();
-        CreateFoodResponse response = CreateFoodResponse
-                .builder()
-                .status(true)
-                .build();
+
+        Long id = 1L;
+        FoodResponse response = getFoodResponse(id);
 
         Mockito.when(foodServiceImpl.saveFood(request))
                 .thenReturn(response);
@@ -62,7 +60,15 @@ public class FoodControllerTest {
 
         //  then
         MvcResult mvcResult = resultActions.andExpect(status().isOk())
-                .andExpect(jsonPath("status",response.status()).exists())
+                .andExpect(jsonPath("id",response.id()).exists())
+                .andExpect(jsonPath("name",response.name()).exists())
+                .andExpect(jsonPath("caloriePerGram",response.caloriePerGram()).exists())
+                .andExpect(jsonPath("carbohydratePerGram",response.carbohydratePerGram()).exists())
+                .andExpect(jsonPath("proteinPerGram",response.proteinPerGram()).exists())
+                .andExpect(jsonPath("provincePerGram",response.provincePerGram()).exists())
+                .andExpect(jsonPath("grams",response.grams()).exists())
+                .andExpect(jsonPath("price",response.price()).exists())
+                .andExpect(jsonPath("imgPath",response.imgPath()).exists())
                 .andReturn();
     }
 

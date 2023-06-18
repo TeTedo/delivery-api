@@ -2,7 +2,6 @@ package com.delivery.toy.domain.food.service;
 
 import com.delivery.toy.domain.food.dto.request.CreateFoodRequest;
 import com.delivery.toy.domain.food.dto.request.FindByFoodIdRequest;
-import com.delivery.toy.domain.food.dto.response.CreateFoodResponse;
 import com.delivery.toy.domain.food.dto.response.FoodResponse;
 import com.delivery.toy.domain.food.exception.FoodNotFoundException;
 import com.delivery.toy.domain.food.mapper.FoodMapper;
@@ -19,14 +18,12 @@ public class FoodServiceImpl implements FoodService{
     private final FoodRepository foodRepository;
 
     @Override
-    public CreateFoodResponse saveFood(CreateFoodRequest foodDto) {
+    public FoodResponse saveFood(CreateFoodRequest foodDto) {
         Food food = foodMapper.toFood(foodDto);
-        foodRepository.save(food);
 
-        return CreateFoodResponse
-                .builder()
-                .status(true)
-                .build();
+        Food savedFood = foodRepository.save(food);
+
+        return foodMapper.toFoodResponse(savedFood);
     }
 
     @Override
