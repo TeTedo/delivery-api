@@ -10,7 +10,6 @@ import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.food.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 @RequiredArgsConstructor
 @Service
@@ -22,16 +21,11 @@ public class FoodServiceImpl implements FoodService{
     @Override
     public CreateFoodResponse saveFood(CreateFoodRequest foodDto) {
         Food food = foodMapper.toFood(foodDto);
-        Assert.notNull(food, "food는 null값이 될수 없습니다.");
-        
-        Food savedFood = foodRepository.save(food);
-        Assert.isTrue(savedFood.equals(food), "food 저장 실패");
-
-        boolean status = true;
+        foodRepository.save(food);
 
         return CreateFoodResponse
                 .builder()
-                .status(status)
+                .status(true)
                 .build();
     }
 
