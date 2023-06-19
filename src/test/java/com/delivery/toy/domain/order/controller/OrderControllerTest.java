@@ -1,7 +1,9 @@
 package com.delivery.toy.domain.order.controller;
 
+import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.order.dto.request.CreateOrderRequest;
 import com.delivery.toy.domain.order.dto.response.CreateOrderResponse;
+import com.delivery.toy.domain.order.dto.response.OrderResponse;
 import com.delivery.toy.domain.order.service.OrderServiceImpl;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,14 +42,13 @@ public class OrderControllerTest {
 
     @DisplayName("POST /orders")
     @Test
-    void save() throws Exception {
+    void post_orders() throws Exception {
         // given
         Long foodId = 1L;
         int count = 1;
         CreateOrderRequest request = getRequest(foodId, count);
 
-        boolean status = true;
-        CreateOrderResponse response = getResponse(status);
+        OrderResponse response = getResponse();
 
         Mockito.when(orderServiceImpl.saveOrder(request))
                 .thenReturn(response);
@@ -62,7 +63,6 @@ public class OrderControllerTest {
         // then
         MvcResult mvcResult = resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("status", response.status()).exists())
                 .andReturn();
         System.out.println(mvcResult);
     }
@@ -74,9 +74,8 @@ public class OrderControllerTest {
                 .build();
     }
 
-    private CreateOrderResponse getResponse(boolean status) {
-        return CreateOrderResponse.builder()
-                .status(status)
+    private OrderResponse getResponse() {
+        return OrderResponse.builder()
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import com.delivery.toy.domain.food.repository.FoodRepository;
 import com.delivery.toy.domain.order.dto.request.CreateOrderRequest;
 import com.delivery.toy.domain.order.dto.request.OrderRequest;
 import com.delivery.toy.domain.order.dto.response.CreateOrderResponse;
+import com.delivery.toy.domain.order.dto.response.OrderResponse;
 import com.delivery.toy.domain.order.mapper.OrderMapper;
 import com.delivery.toy.domain.order.model.Order;
 import com.delivery.toy.domain.order.repository.OrderRepository;
@@ -91,9 +92,6 @@ public class OrderServiceTest {
 
         OrderRequest orderRequest = getOrderRequest(userId, count);
 
-        boolean status = true;
-        CreateOrderResponse mockResponse = getOrderResponse(status);
-
         Mockito.when(mockedFoodRepository.findById(foodId))
                 .thenReturn(Optional.of(food));
 
@@ -103,26 +101,35 @@ public class OrderServiceTest {
         Mockito.when(orderRepository.save(Mockito.any(Order.class)))
                 .thenReturn(mockedOrder);
 
-        Mockito.when(orderMapper.toCreateOrderResponse(status))
-                .thenReturn(mockResponse);
+        OrderResponse orderResponse = getOrderResponse();
+
+        Mockito.when(orderMapper.toOrderResponse(mockedOrder))
+                .thenReturn(orderResponse);
 
         // when
-        CreateOrderResponse response = orderServiceImpl.saveOrder(request);
+        OrderResponse response = orderServiceImpl.saveOrder(request);
 
         // then
         Assertions.assertThat(response).isNotNull();
-        Assertions.assertThat(response).isEqualTo(mockResponse);
-        Assertions.assertThat(response.status()).isEqualTo(status);
+        Assertions.assertThat(response).isEqualTo(orderResponse);
+        Assertions.assertThat(response)
+                .hasFieldOrPropertyWithValue("id", mockedOrder.getId())
+                .hasFieldOrPropertyWithValue("food", mockedOrder.getFood())
+                .hasFieldOrPropertyWithValue("userId", mockedOrder.getUserId())
+                .hasFieldOrPropertyWithValue("count", mockedOrder.getCount());
 
         Mockito.verify(mockedFoodRepository).findById(foodId);
         Mockito.verify(orderMapper).toOrder(orderRequest);
         Mockito.verify(orderRepository).save(mockedOrder);
-        Mockito.verify(orderMapper).toCreateOrderResponse(status);
+        Mockito.verify(orderMapper).toOrderResponse(mockedOrder);
     }
 
-    private CreateOrderResponse getOrderResponse(boolean status) {
-        return CreateOrderResponse.builder()
-                .status(status)
+    private OrderResponse getOrderResponse() {
+        return OrderResponse.builder()
+                .id(mockedOrder.getId())
+                .food(mockedOrder.getFood())
+                .userId(mockedOrder.getUserId())
+                .count(mockedOrder.getCount())
                 .build();
     }
 
