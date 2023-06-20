@@ -44,7 +44,6 @@ public class OrderServiceTest {
 
     @BeforeEach
     void setUp(){
-        Long id = 1L;
         String name = "salad";
         double caloriePerGram = 1.2;
         double carbohydratePerGram = 0.03;
@@ -55,7 +54,6 @@ public class OrderServiceTest {
         String imgPath = "tempImgPath";
 
         food = Food.builder()
-                .id(id)
                 .name(name)
                 .caloriePerGram(caloriePerGram)
                 .carbohydratePerGram(carbohydratePerGram)
@@ -110,6 +108,9 @@ public class OrderServiceTest {
 
         // then
         Assertions.assertThat(response).isNotNull();
+        Assertions.assertThat(response.food()).isEqualTo(food);
+        Assertions.assertThat(response.userId()).isEqualTo(userId);
+        Assertions.assertThat(response.count()).isEqualTo(count);
         Assertions.assertThat(response).isEqualTo(orderResponse);
         Assertions.assertThat(response)
                 .hasFieldOrPropertyWithValue("id", mockedOrder.getId())
