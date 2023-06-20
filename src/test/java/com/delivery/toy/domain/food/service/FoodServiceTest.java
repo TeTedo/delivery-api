@@ -2,7 +2,6 @@ package com.delivery.toy.domain.food.service;
 
 import com.delivery.toy.domain.food.dto.request.CreateFoodRequest;
 import com.delivery.toy.domain.food.dto.request.FindByFoodIdRequest;
-import com.delivery.toy.domain.food.dto.response.CreateFoodResponse;
 import com.delivery.toy.domain.food.dto.response.FoodResponse;
 import com.delivery.toy.domain.food.mapper.FoodMapper;
 import com.delivery.toy.domain.food.model.Food;
@@ -69,16 +68,19 @@ public class FoodServiceTest {
         Mockito.when(foodRepository.save(Mockito.any(Food.class)))
                 .thenReturn(mockedFood);
 
+        FoodResponse mockFoodResponse = getFoodResponse();
+        Mockito.when(foodMapper.toFoodResponse(mockedFood))
+                .thenReturn(mockFoodResponse);
         // when
-        CreateFoodResponse foodResponse = foodServiceImpl.saveFood(foodDto);
+        FoodResponse foodResponse = foodServiceImpl.saveFood(foodDto);
 
         // then
         Assertions.assertThat(foodResponse)
-                .hasFieldOrPropertyWithValue("status",true);
-
+                .isEqualTo(mockFoodResponse);
 
         Mockito.verify(foodMapper).toFood(foodDto);
         Mockito.verify(foodRepository).save(mockedFood);
+        Mockito.verify(foodMapper).toFoodResponse(mockedFood);
     }
 
     private CreateFoodRequest getCreateFoodRequest(){
@@ -107,7 +109,7 @@ public class FoodServiceTest {
 
     @DisplayName("foodId를 받아 조회")
     @Test
-    void findById() {
+    void findByFoodId() {
         // given
         saveFood();
         Long foodId = 1L;

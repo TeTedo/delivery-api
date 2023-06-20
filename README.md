@@ -13,6 +13,8 @@
 
 [this는 꼭 써야 하나?](https://diary-blockchain.tistory.com/303)
 
+[assert를 필요한곳에만 사용](https://diary-blockchain.tistory.com/311)
+
 ---
 ## 정리, 공부할 것들
 - 직렬화, 역직렬화

@@ -2,7 +2,6 @@ package com.delivery.toy.domain.food.controller;
 
 import com.delivery.toy.domain.food.dto.request.CreateFoodRequest;
 import com.delivery.toy.domain.food.dto.request.FindByFoodIdRequest;
-import com.delivery.toy.domain.food.dto.response.CreateFoodResponse;
 import com.delivery.toy.domain.food.dto.response.FoodResponse;
 import com.delivery.toy.domain.food.service.FoodServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +16,10 @@ public class FoodController {
     private final FoodServiceImpl foodServiceImpl;
 
     @PostMapping()
-    public ResponseEntity<CreateFoodResponse>  createFood(
+    public ResponseEntity<FoodResponse>  createFood(
             @RequestBody CreateFoodRequest request) {
 
-        CreateFoodResponse response = foodServiceImpl.saveFood(request);
+        FoodResponse response = foodServiceImpl.saveFood(request);
         return ResponseEntity.ok().body(response);
     }
 

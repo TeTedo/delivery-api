@@ -4,7 +4,7 @@ import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.food.repository.FoodRepository;
 import com.delivery.toy.domain.order.dto.request.CreateOrderRequest;
 import com.delivery.toy.domain.order.dto.request.OrderRequest;
-import com.delivery.toy.domain.order.dto.response.CreateOrderResponse;
+import com.delivery.toy.domain.order.dto.response.OrderResponse;
 import com.delivery.toy.domain.order.mapper.OrderMapper;
 import com.delivery.toy.domain.order.model.Order;
 import com.delivery.toy.domain.order.repository.OrderRepository;
@@ -44,7 +44,6 @@ public class OrderServiceTest {
 
     @BeforeEach
     void setUp(){
-        Long id = 1L;
         String name = "salad";
         double caloriePerGram = 1.2;
         double carbohydratePerGram = 0.03;
@@ -55,7 +54,6 @@ public class OrderServiceTest {
         String imgPath = "tempImgPath";
 
         food = Food.builder()
-                .id(id)
                 .name(name)
                 .caloriePerGram(caloriePerGram)
                 .carbohydratePerGram(carbohydratePerGram)
@@ -81,7 +79,7 @@ public class OrderServiceTest {
 
     @DisplayName("foodId와 count를 받아 주문을 저장한다.")
     @Test
-    void save() throws Exception{
+    void saveOrder() {
         // given
         Long foodId = 1L;
         int userId = 1;
@@ -90,9 +88,6 @@ public class OrderServiceTest {
         CreateOrderRequest request = getCreateOrderRequest(foodId, count);
 
         OrderRequest orderRequest = getOrderRequest(userId, count);
-
-        Long orderId = 1L;
-        CreateOrderResponse mockResponse = getOrderResponse(userId, count, orderId);
 
         Mockito.when(mockedFoodRepository.findById(foodId))
                 .thenReturn(Optional.of(food));
@@ -103,31 +98,38 @@ public class OrderServiceTest {
         Mockito.when(orderRepository.save(Mockito.any(Order.class)))
                 .thenReturn(mockedOrder);
 
-        Mockito.when(orderMapper.toCreateOrderResponse(Mockito.any(Order.class)))
-                .thenReturn(mockResponse);
+        OrderResponse orderResponse = getOrderResponse();
+
+        Mockito.when(orderMapper.toOrderResponse(mockedOrder))
+                .thenReturn(orderResponse);
 
         // when
-        CreateOrderResponse response = orderServiceImpl.saveOrder(request);
+        OrderResponse response = orderServiceImpl.saveOrder(request);
 
         // then
         Assertions.assertThat(response).isNotNull();
-        Assertions.assertThat(response).isEqualTo(mockResponse);
         Assertions.assertThat(response.food()).isEqualTo(food);
         Assertions.assertThat(response.userId()).isEqualTo(userId);
         Assertions.assertThat(response.count()).isEqualTo(count);
+        Assertions.assertThat(response).isEqualTo(orderResponse);
+        Assertions.assertThat(response)
+                .hasFieldOrPropertyWithValue("id", mockedOrder.getId())
+                .hasFieldOrPropertyWithValue("food", mockedOrder.getFood())
+                .hasFieldOrPropertyWithValue("userId", mockedOrder.getUserId())
+                .hasFieldOrPropertyWithValue("count", mockedOrder.getCount());
 
         Mockito.verify(mockedFoodRepository).findById(foodId);
         Mockito.verify(orderMapper).toOrder(orderRequest);
         Mockito.verify(orderRepository).save(mockedOrder);
-        Mockito.verify(orderMapper).toCreateOrderResponse(mockedOrder);
+        Mockito.verify(orderMapper).toOrderResponse(mockedOrder);
     }
 
-    private CreateOrderResponse getOrderResponse(int userId, int count, Long orderId) {
-        return CreateOrderResponse.builder()
-                .id(orderId)
-                .food(food)
-                .userId(userId)
-                .count(count)
+    private OrderResponse getOrderResponse() {
+        return OrderResponse.builder()
+                .id(mockedOrder.getId())
+                .food(mockedOrder.getFood())
+                .userId(mockedOrder.getUserId())
+                .count(mockedOrder.getCount())
                 .build();
     }
 

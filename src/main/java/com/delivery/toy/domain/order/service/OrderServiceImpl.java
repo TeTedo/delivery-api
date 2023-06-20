@@ -1,16 +1,11 @@
 package com.delivery.toy.domain.order.service;
 
-import com.delivery.toy.domain.food.dto.request.FindByFoodIdRequest;
-import com.delivery.toy.domain.food.dto.response.FoodResponse;
 import com.delivery.toy.domain.food.exception.FoodNotFoundException;
-import com.delivery.toy.domain.food.mapper.FoodMapper;
 import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.food.repository.FoodRepository;
-import com.delivery.toy.domain.food.service.FoodService;
-import com.delivery.toy.domain.food.service.FoodServiceImpl;
 import com.delivery.toy.domain.order.dto.request.CreateOrderRequest;
 import com.delivery.toy.domain.order.dto.request.OrderRequest;
-import com.delivery.toy.domain.order.dto.response.CreateOrderResponse;
+import com.delivery.toy.domain.order.dto.response.OrderResponse;
 import com.delivery.toy.domain.order.mapper.OrderMapper;
 import com.delivery.toy.domain.order.model.Order;
 import com.delivery.toy.domain.order.repository.OrderRepository;
@@ -26,7 +21,7 @@ public class OrderServiceImpl implements OrderService{
     private final OrderMapper orderMapper;
 
     @Override
-    public CreateOrderResponse saveOrder(CreateOrderRequest request){
+    public OrderResponse saveOrder(CreateOrderRequest request){
 
         Food food = foodRepository.findById(request.foodId())
                 .orElseThrow(()-> new FoodNotFoundException("해당 id를 가진 Food가 없습니다."));
@@ -44,6 +39,6 @@ public class OrderServiceImpl implements OrderService{
 
         Order savedOrder = orderRepository.save(order);
 
-        return orderMapper.toCreateOrderResponse(savedOrder);
+        return orderMapper.toOrderResponse(savedOrder);
     }
 }
