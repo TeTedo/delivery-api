@@ -52,7 +52,7 @@ public class FoodRepositoryTest extends RepositoryTest {
 
     @DisplayName("Food 조회 테스트")
     @Test
-    void find(){
+    void findById(){
         // given
         Food savedFood = foodRepository.save(food);
         Long id = savedFood.getId();

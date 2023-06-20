@@ -109,7 +109,7 @@ public class FoodServiceTest {
 
     @DisplayName("foodId를 받아 조회")
     @Test
-    void findById() {
+    void findByFoodId() {
         // given
         saveFood();
         Long foodId = 1L;

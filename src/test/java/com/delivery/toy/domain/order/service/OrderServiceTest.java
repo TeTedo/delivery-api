@@ -82,7 +82,7 @@ public class OrderServiceTest {
 
     @DisplayName("foodId와 count를 받아 주문을 저장한다.")
     @Test
-    void save() {
+    void saveOrder() {
         // given
         Long foodId = 1L;
         int userId = 1;

@@ -41,7 +41,7 @@ public class FoodControllerTest {
 
     @DisplayName("Post /foods")
     @Test
-    void save() throws Exception{
+    void post_foods() throws Exception{
         // given
         CreateFoodRequest request = getCreateFoodRequest();
 
@@ -98,7 +98,7 @@ public class FoodControllerTest {
 
     @DisplayName("Get /foods/{food-id}")
     @Test
-    void findById() throws Exception{
+    void get_foods_foodId() throws Exception{
         // given
         Long id = 1L;
         FindByFoodIdRequest request = FindByFoodIdRequest
