@@ -4,7 +4,6 @@ import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.food.repository.FoodRepository;
 import com.delivery.toy.domain.order.dto.request.CreateOrderRequest;
 import com.delivery.toy.domain.order.dto.request.OrderRequest;
-import com.delivery.toy.domain.order.dto.response.CreateOrderResponse;
 import com.delivery.toy.domain.order.dto.response.OrderResponse;
 import com.delivery.toy.domain.order.mapper.OrderMapper;
 import com.delivery.toy.domain.order.model.Order;

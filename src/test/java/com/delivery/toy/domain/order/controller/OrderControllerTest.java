@@ -1,8 +1,6 @@
 package com.delivery.toy.domain.order.controller;
 
-import com.delivery.toy.domain.food.model.Food;
 import com.delivery.toy.domain.order.dto.request.CreateOrderRequest;
-import com.delivery.toy.domain.order.dto.response.CreateOrderResponse;
 import com.delivery.toy.domain.order.dto.response.OrderResponse;
 import com.delivery.toy.domain.order.service.OrderServiceImpl;
 import com.google.gson.Gson;
@@ -22,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderControllerTest {
