@@ -15,6 +15,8 @@
 
 [assert를 필요한곳에만 사용](https://diary-blockchain.tistory.com/311)
 
+[Mockito란?](https://diary-blockchain.tistory.com/301)
+
 ---
 ## 정리, 공부할 것들
 - 직렬화, 역직렬화
