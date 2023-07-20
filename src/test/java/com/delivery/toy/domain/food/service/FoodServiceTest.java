@@ -35,22 +35,12 @@ public class FoodServiceTest {
     void setUp(){
         Long foodId = 1L;
         String name = "salad";
-        double caloriePerGram = 1.2;
-        double carbohydratePerGram = 0.03;
-        double proteinPerGram = 0.05;
-        double provincePerGram = 0.01;
-        int grams = 250;
         int price = 12000;
         String imgPath = "tempImgPath";
 
         this.mockedFood = Food.builder()
                 .id(foodId)
                 .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
                 .price(price)
                 .imgPath(imgPath)
                 .build();
@@ -85,11 +75,6 @@ public class FoodServiceTest {
 
     private CreateFoodRequest getCreateFoodRequest(){
         String name = "salad";
-        double caloriePerGram = 1.2;
-        double carbohydratePerGram = 0.03;
-        double proteinPerGram = 0.05;
-        double provincePerGram = 0.01;
-        int grams = 250;
         int price = 12000;
         String imgPath = "tempImgPath";
 
@@ -97,11 +82,6 @@ public class FoodServiceTest {
         return CreateFoodRequest
                 .builder()
                 .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
                 .price(price)
                 .imgPath(imgPath)
                 .build();
@@ -140,11 +120,6 @@ public class FoodServiceTest {
     private FoodResponse getFoodResponse(){
         Long id = 1L;
         String name = "salad";
-        double caloriePerGram = 1.2;
-        double carbohydratePerGram = 0.03;
-        double proteinPerGram = 0.05;
-        double provincePerGram = 0.01;
-        int grams = 250;
         int price = 12000;
         String imgPath = "tempImgPath";
 
@@ -153,11 +128,6 @@ public class FoodServiceTest {
                 .builder()
                 .id(id)
                 .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
                 .price(price)
                 .imgPath(imgPath)
                 .build();
