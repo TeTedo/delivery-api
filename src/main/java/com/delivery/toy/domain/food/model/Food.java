@@ -21,21 +21,6 @@ public class Food extends BaseTImeEntity {
     @Column(nullable = false, length = 100)
     private  String name;
 
-    @Column(nullable = false, name = "calorie_per_gram")
-    private  double caloriePerGram;
-
-    @Column(nullable = false, name = "carbohydrate_per_gram")
-    private  double carbohydratePerGram;
-
-    @Column(nullable = false, name = "protein_per_gram")
-    private  double proteinPerGram;
-
-    @Column(nullable = false, name = "province_per_gram")
-    private  double provincePerGram;
-
-    @Column(nullable = false)
-    private  int grams;
-
     @Column(nullable = false)
     private  int price;
 
@@ -46,29 +31,15 @@ public class Food extends BaseTImeEntity {
     public Food(
             Long id,
             String name,
-            double caloriePerGram,
-            double carbohydratePerGram,
-            double proteinPerGram,
-            double provincePerGram,
-            int grams,
             int price,
             String imgPath
     ) {
         Assert.hasText(name, "상품명은 필수입니다.");
-        Assert.isTrue(caloriePerGram > 0, "그램당 칼로리는 0보다 큽니다.");
-        Assert.isTrue(carbohydratePerGram > 0, "그램당 탄수화물은 0보다 큽니다");
-        Assert.isTrue(proteinPerGram > 0, "그램당 단백질은 0보다 큽니다");
-        Assert.isTrue(provincePerGram > 0, "그램당 지방은 0보다 큽니다");
         Assert.isTrue(price > 0, "가격은 0 보다 커야 합니다.");
         Assert.notNull(imgPath, "사진 url은 필수입니다.");
 
         this.id = id;
         this.name = name;
-        this.caloriePerGram = caloriePerGram;
-        this.carbohydratePerGram = carbohydratePerGram;
-        this.proteinPerGram = proteinPerGram;
-        this.provincePerGram = provincePerGram;
-        this.grams = grams;
         this.price = price;
         this.imgPath = imgPath;
     }

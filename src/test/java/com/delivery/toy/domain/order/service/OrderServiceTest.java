@@ -45,21 +45,11 @@ public class OrderServiceTest {
     @BeforeEach
     void setUp(){
         String name = "salad";
-        double caloriePerGram = 1.2;
-        double carbohydratePerGram = 0.03;
-        double proteinPerGram = 0.05;
-        double provincePerGram = 0.01;
-        int grams = 250;
         int price = 12000;
         String imgPath = "tempImgPath";
 
         food = Food.builder()
                 .name(name)
-                .caloriePerGram(caloriePerGram)
-                .carbohydratePerGram(carbohydratePerGram)
-                .proteinPerGram(proteinPerGram)
-                .provincePerGram(provincePerGram)
-                .grams(grams)
                 .price(price)
                 .imgPath(imgPath)
                 .build();
