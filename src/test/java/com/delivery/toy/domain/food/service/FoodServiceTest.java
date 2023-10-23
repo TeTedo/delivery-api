@@ -20,116 +20,113 @@ import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class FoodServiceTest {
-    @Mock
-    private FoodMapper foodMapper;
+        @Mock
+        private FoodMapper foodMapper;
 
-    @Mock
-    private FoodRepository foodRepository;
+        @Mock
+        private FoodRepository foodRepository;
 
-    @InjectMocks
-    private FoodServiceImpl foodServiceImpl;
+        @InjectMocks
+        private FoodServiceImpl foodServiceImpl;
 
-    Food mockedFood;
+        Food mockedFood;
 
-    @BeforeEach
-    void setUp(){
-        Long foodId = 1L;
-        String name = "salad";
-        int price = 12000;
-        String imgPath = "tempImgPath";
+        @BeforeEach
+        void setUp() {
+                Long foodId = 1L;
+                String name = "salad";
+                int price = 12000;
+                String imgPath = "tempImgPath";
 
-        this.mockedFood = Food.builder()
-                .id(foodId)
-                .name(name)
-                .price(price)
-                .imgPath(imgPath)
-                .build();
-    }
+                this.mockedFood = Food.builder()
+                                .id(foodId)
+                                .name(name)
+                                .price(price)
+                                .imgPath(imgPath)
+                                .build();
+        }
 
-    @DisplayName("FoodRequestDto를 받아Entity로 바꾸고 저장")
-    @Test
-    void saveFood(){
-        // given
-        CreateFoodRequest foodDto = getCreateFoodRequest();
+        @DisplayName("FoodRequestDto를 받아Entity로 바꾸고 저장")
+        @Test
+        void saveFood() {
+                // given
+                CreateFoodRequest foodDto = getCreateFoodRequest();
 
-        Mockito.when(foodMapper.toFood(foodDto))
-                .thenReturn(mockedFood);
+                Mockito.when(foodMapper.toFood(foodDto))
+                                .thenReturn(mockedFood);
 
-        Mockito.when(foodRepository.save(Mockito.any(Food.class)))
-                .thenReturn(mockedFood);
+                Mockito.when(foodRepository.save(Mockito.any(Food.class)))
+                                .thenReturn(mockedFood);
 
-        FoodResponse mockFoodResponse = getFoodResponse();
-        Mockito.when(foodMapper.toFoodResponse(mockedFood))
-                .thenReturn(mockFoodResponse);
-        // when
-        FoodResponse foodResponse = foodServiceImpl.saveFood(foodDto);
+                FoodResponse mockFoodResponse = getFoodResponse();
+                Mockito.when(foodMapper.toFoodResponse(mockedFood))
+                                .thenReturn(mockFoodResponse);
+                // when
+                FoodResponse foodResponse = foodServiceImpl.saveFood(foodDto);
 
-        // then
-        Assertions.assertThat(foodResponse)
-                .isEqualTo(mockFoodResponse);
+                // then
+                Assertions.assertThat(foodResponse)
+                                .isEqualTo(mockFoodResponse);
 
-        Mockito.verify(foodMapper).toFood(foodDto);
-        Mockito.verify(foodRepository).save(mockedFood);
-        Mockito.verify(foodMapper).toFoodResponse(mockedFood);
-    }
+                Mockito.verify(foodMapper).toFood(foodDto);
+                Mockito.verify(foodRepository).save(mockedFood);
+                Mockito.verify(foodMapper).toFoodResponse(mockedFood);
+        }
 
-    private CreateFoodRequest getCreateFoodRequest(){
-        String name = "salad";
-        int price = 12000;
-        String imgPath = "tempImgPath";
+        private CreateFoodRequest getCreateFoodRequest() {
+                String name = "salad";
+                int price = 12000;
+                String imgPath = "tempImgPath";
 
+                return CreateFoodRequest
+                                .builder()
+                                .name(name)
+                                .price(price)
+                                .imgPath(imgPath)
+                                .build();
+        }
 
-        return CreateFoodRequest
-                .builder()
-                .name(name)
-                .price(price)
-                .imgPath(imgPath)
-                .build();
-    }
+        @DisplayName("foodId를 받아 조회")
+        @Test
+        void findByFoodId() {
+                // given
+                saveFood();
+                Long foodId = 1L;
 
-    @DisplayName("foodId를 받아 조회")
-    @Test
-    void findByFoodId() {
-        // given
-        saveFood();
-        Long foodId = 1L;
+                FindByFoodIdRequest findByFoodIdRequest = FindByFoodIdRequest
+                                .builder()
+                                .id(foodId)
+                                .build();
+                FoodResponse response = getFoodResponse();
 
-        FindByFoodIdRequest findByFoodIdRequest = FindByFoodIdRequest
-                .builder()
-                .id(foodId)
-                .build();
-        FoodResponse response = getFoodResponse();
+                Mockito.when(foodMapper.toFoodResponse(Mockito.any(Food.class)))
+                                .thenReturn(response);
 
-        Mockito.when(foodMapper.toFoodResponse(Mockito.any(Food.class)))
-                .thenReturn(response);
+                Mockito.when(foodRepository.findById(foodId))
+                                .thenReturn(Optional.of(mockedFood));
 
-        Mockito.when(foodRepository.findById(foodId))
-                .thenReturn(Optional.of(mockedFood));
+                // when
+                FoodResponse foodResponse = foodServiceImpl.findByFoodId(findByFoodIdRequest);
 
+                // then
+                Assertions.assertThat(foodResponse)
+                                .hasFieldOrPropertyWithValue("id", foodId);
 
-        // when
-        FoodResponse foodResponse = foodServiceImpl.findByFoodId(findByFoodIdRequest);
+                Mockito.verify(foodRepository).findById(foodId);
+        }
 
-        // then
-        Assertions.assertThat(foodResponse)
-                .hasFieldOrPropertyWithValue("id",foodId);
+        private FoodResponse getFoodResponse() {
+                Long id = 1L;
+                String name = "salad";
+                int price = 12000;
+                String imgPath = "tempImgPath";
 
-        Mockito.verify(foodRepository).findById(foodId);
-    }
-
-    private FoodResponse getFoodResponse(){
-        Long id = 1L;
-        String name = "salad";
-        int price = 12000;
-        String imgPath = "tempImgPath";
-
-
-        return FoodResponse
-                .builder()
-                .id(id)
-                .name(name)
-                .price(price)
-                .imgPath(imgPath)
-                .build();
-    }
+                return FoodResponse
+                                .builder()
+                                .id(id)
+                                .name(name)
+                                .price(price)
+                                .imgPath(imgPath)
+                                .build();
+        }
 }

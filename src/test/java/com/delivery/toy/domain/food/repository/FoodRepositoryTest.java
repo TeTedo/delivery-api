@@ -13,7 +13,7 @@ public class FoodRepositoryTest extends RepositoryTest {
     Food food;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         String name = "salad";
         int price = 12000;
         String imgPath = "tempImgPath";
@@ -28,7 +28,7 @@ public class FoodRepositoryTest extends RepositoryTest {
 
     @DisplayName("Food 저장 테스트")
     @Test
-    void save(){
+    void save() {
         // when
         Food savedFood = foodRepository.save(food);
 
@@ -38,14 +38,14 @@ public class FoodRepositoryTest extends RepositoryTest {
 
     @DisplayName("Food 조회 테스트")
     @Test
-    void findById(){
+    void findById() {
         // given
         Food savedFood = foodRepository.save(food);
         Long id = savedFood.getId();
 
         // when
         Food foundFood = foodRepository.findById(id)
-                .orElseThrow(()-> new FoodNotFoundException("해당 Id는 없는 Food입니다."));
+                .orElseThrow(() -> new FoodNotFoundException("해당 Id는 없는 Food입니다."));
 
         // then
         Assertions.assertThat(foundFood).isEqualTo(food);

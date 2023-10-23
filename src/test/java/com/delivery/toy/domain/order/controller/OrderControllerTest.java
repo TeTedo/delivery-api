@@ -3,7 +3,8 @@ package com.delivery.toy.domain.order.controller;
 import com.delivery.toy.domain.order.dto.request.CreateOrderRequest;
 import com.delivery.toy.domain.order.dto.response.OrderResponse;
 import com.delivery.toy.domain.order.service.OrderServiceImpl;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,9 +33,12 @@ public class OrderControllerTest {
 
     private MockMvc mockMvc;
 
+    private ObjectMapper objectMapper;
+
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
+        this.objectMapper = new ObjectMapper();
     }
 
     @DisplayName("POST /orders")
@@ -54,8 +58,7 @@ public class OrderControllerTest {
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.post("/orders")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new Gson().toJson(request))
-        );
+                        .content(objectMapper.writeValueAsString(request)));
 
         // then
         MvcResult mvcResult = resultActions
