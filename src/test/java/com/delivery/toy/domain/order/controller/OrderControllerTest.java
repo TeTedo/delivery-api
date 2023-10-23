@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -55,7 +54,6 @@ public class OrderControllerTest {
         Mockito.when(orderServiceImpl.saveOrder(request))
                 .thenReturn(response);
 
-        ObjectMapper objectMapper = new ObjectMapper();
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.post("/orders")
